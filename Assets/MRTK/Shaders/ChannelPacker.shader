@@ -26,7 +26,6 @@ Shader "Hidden/ChannelPacker"
         Pass
         {
             CGPROGRAM
-
             #pragma vertex vert
             #pragma fragment frag
 
@@ -97,7 +96,6 @@ Shader "Hidden/ChannelPacker"
 
                 return output;
             }
-
             ENDCG
         }
     }

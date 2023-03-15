@@ -12,17 +12,17 @@ Shader "Mixed Reality Toolkit/Wireframe"
     Properties
     {
         // Advanced options.
-        [Enum(RenderingMode)] _Mode("Rendering Mode", Float) = 0                                     // "Opaque"
-        [Enum(CustomRenderingMode)] _CustomMode("Mode", Float) = 0                                   // "Opaque"
-        [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("Source Blend", Float) = 1                 // "One"
-        [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("Destination Blend", Float) = 0            // "Zero"
-        [Enum(UnityEngine.Rendering.BlendOp)] _BlendOp("Blend Operation", Float) = 0                 // "Add"
-        [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest("Depth Test", Float) = 4                // "LessEqual"
-        [Enum(DepthWrite)] _ZWrite("Depth Write", Float) = 1                                         // "On"
-        _ZOffsetFactor("Depth Offset Factor", Float) = 0                                             // "Zero"
-        _ZOffsetUnits("Depth Offset Units", Float) = 0                                               // "Zero"
+        [Enum(RenderingMode)] _Mode("Rendering Mode", Float) = 0 // "Opaque"
+        [Enum(CustomRenderingMode)] _CustomMode("Mode", Float) = 0 // "Opaque"
+        [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("Source Blend", Float) = 1 // "One"
+        [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("Destination Blend", Float) = 0 // "Zero"
+        [Enum(UnityEngine.Rendering.BlendOp)] _BlendOp("Blend Operation", Float) = 0 // "Add"
+        [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest("Depth Test", Float) = 4 // "LessEqual"
+        [Enum(DepthWrite)] _ZWrite("Depth Write", Float) = 1 // "On"
+        _ZOffsetFactor("Depth Offset Factor", Float) = 0 // "Zero"
+        _ZOffsetUnits("Depth Offset Units", Float) = 0 // "Zero"
         [Enum(UnityEngine.Rendering.ColorWriteMask)] _ColorWriteMask("Color Write Mask", Float) = 15 // "All"
-        [Enum(UnityEngine.Rendering.CullMode)] _CullMode("Cull Mode", Float) = 2                     // "Back"
+        [Enum(UnityEngine.Rendering.CullMode)] _CullMode("Cull Mode", Float) = 2 // "Back"
         _RenderQueueOverride("Render Queue Override", Range(-1.0, 5000)) = -1
 
         _BaseColor("Base color", Color) = (0.0, 0.0, 0.0, 1.0)
@@ -31,7 +31,10 @@ Shader "Mixed Reality Toolkit/Wireframe"
     }
     SubShader
     {
-        Tags { "RenderType" = "Opaque" }
+        Tags
+        {
+            "RenderType" = "Opaque"
+        }
         Blend[_SrcBlend][_DstBlend]
         BlendOp[_BlendOp]
         ZTest[_ZTest]
@@ -116,11 +119,11 @@ Shader "Mixed Reality Toolkit/Wireframe"
                 [unroll]
                 for (uint idx = 0; idx < 3; ++idx)
                 {
-                   o.viewPos = i[idx].viewPos;
-                   o.inverseW = 1.0 / o.viewPos.w;
-                   o.dist = distScale[idx] * o.viewPos.w * wireScale;
-                   UNITY_TRANSFER_VERTEX_OUTPUT_STEREO(i[idx], o);
-                   triStream.Append(o);
+                    o.viewPos = i[idx].viewPos;
+                    o.inverseW = 1.0 / o.viewPos.w;
+                    o.dist = distScale[idx] * o.viewPos.w * wireScale;
+                    UNITY_TRANSFER_VERTEX_OUTPUT_STEREO(i[idx], o);
+                    triStream.Append(o);
                 }
             }
 

@@ -19,13 +19,15 @@ Shader "Hidden/Instanced-Colored"
         Pass
         {
             Name "Main"
-            Tags{ "RenderType" = "Opaque" }
+            Tags
+            {
+                "RenderType" = "Opaque"
+            }
             ZWrite[_ZWrite]
             ZTest[_ZTest]
             Cull[_Cull]
 
             CGPROGRAM
-
             #pragma vertex vert
             #pragma fragment frag
 
@@ -57,7 +59,8 @@ Shader "Hidden/Instanced-Colored"
                 v2f o;
                 UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                o.vertex = mul(UNITY_MATRIX_VP, mul(_ParentLocalToWorldMatrix, mul(unity_ObjectToWorld, float4(v.vertex.xyz, 1.0))));
+                o.vertex = mul(UNITY_MATRIX_VP, mul(_ParentLocalToWorldMatrix,
+                                                    mul(unity_ObjectToWorld, float4(v.vertex.xyz, 1.0))));
                 o.color = UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
 
                 return o;
@@ -67,7 +70,6 @@ Shader "Hidden/Instanced-Colored"
             {
                 return i.color;
             }
-
             ENDCG
         }
     }

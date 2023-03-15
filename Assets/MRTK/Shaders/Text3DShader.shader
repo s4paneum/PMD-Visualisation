@@ -49,7 +49,10 @@ Shader "Mixed Reality Toolkit/Text3DShader"
         ZWrite On
         ZTest[unity_GUIZTestMode]
         Offset -1, -1
-        Fog { Mode Off }
+        Fog
+        {
+            Mode Off
+        }
         Blend SrcAlpha OneMinusSrcAlpha
         ColorMask[_ColorMask]
 
@@ -58,15 +61,15 @@ Shader "Mixed Reality Toolkit/Text3DShader"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-                
+
             #pragma multi_compile_instancing
 
-            #pragma multi_compile __ _CLIPPING_PLANE _CLIPPING_SPHERE _CLIPPING_BOX                
+            #pragma multi_compile __ _CLIPPING_PLANE _CLIPPING_SPHERE _CLIPPING_BOX
 
             #if defined(_CLIPPING_PLANE) || defined(_CLIPPING_SPHERE) || defined(_CLIPPING_BOX)
                 #define _CLIPPING_PRIMITIVE
             #else
-                #undef _CLIPPING_PRIMITIVE
+            #undef _CLIPPING_PRIMITIVE
             #endif
 
             #include "UnityCG.cginc"
@@ -88,9 +91,9 @@ Shader "Mixed Reality Toolkit/Text3DShader"
                 UNITY_VERTEX_INPUT_INSTANCE_ID
                 UNITY_VERTEX_OUTPUT_STEREO
 
-            #if defined(_CLIPPING_PRIMITIVE)
+                #if defined(_CLIPPING_PRIMITIVE)
                 float3 worldPosition    : TEXCOORD5;
-            #endif
+                #endif
             };
 
 
@@ -99,43 +102,43 @@ Shader "Mixed Reality Toolkit/Text3DShader"
 
             UNITY_INSTANCING_BUFFER_START(Props)
             UNITY_DEFINE_INSTANCED_PROP(fixed4, _Color)
-        
-        #if defined(_CLIPPING_PLANE)
+
+            #if defined(_CLIPPING_PLANE)
             UNITY_DEFINE_INSTANCED_PROP(fixed, _ClipPlaneSide)
             UNITY_DEFINE_INSTANCED_PROP(float4, _ClipPlane)
-        #endif
+            #endif
 
-        #if defined(_CLIPPING_SPHERE)
+            #if defined(_CLIPPING_SPHERE)
             UNITY_DEFINE_INSTANCED_PROP(fixed, _ClipSphereSide)
             UNITY_DEFINE_INSTANCED_PROP(float4x4, _ClipSphereInverseTransform)
-        #endif
+            #endif
 
-        #if defined(_CLIPPING_BOX)
+            #if defined(_CLIPPING_BOX)
             UNITY_DEFINE_INSTANCED_PROP(fixed, _ClipBoxSide)
             UNITY_DEFINE_INSTANCED_PROP(float4x4, _ClipBoxInverseTransform)
-        #endif
+            #endif
 
             UNITY_INSTANCING_BUFFER_END(Props)
 
             v2f vert(appdata_t v)
             {
                 v2f o;
-                    
+
                 UNITY_SETUP_INSTANCE_ID(v);
                 UNITY_TRANSFER_INSTANCE_ID(v, o);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-                    
+
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
                 o.color = v.color;
 
-            #ifdef UNITY_HALF_TEXEL_OFFSET
+                #ifdef UNITY_HALF_TEXEL_OFFSET
                 o.vertex.xy += (_ScreenParams.zw - 1.0)*float2(-1,1);
-            #endif
+                #endif
 
-            #if defined(_CLIPPING_PRIMITIVE)
+                #if defined(_CLIPPING_PRIMITIVE)
                 o.worldPosition = mul(unity_ObjectToWorld, v.vertex).xyz;
-            #endif
+                #endif
 
                 return o;
             }
@@ -147,30 +150,30 @@ Shader "Mixed Reality Toolkit/Text3DShader"
                 half4 col = i.color;
                 col.a *= tex2D(_MainTex, i.texcoord).a;
                 col = col * UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
-                    
+
                 // Primitive clipping.
-        #if defined(_CLIPPING_PRIMITIVE)
+                #if defined(_CLIPPING_PRIMITIVE)
                 float primitiveDistance = 1.0;
-        #if defined(_CLIPPING_PLANE)
+                #if defined(_CLIPPING_PLANE)
                 fixed clipPlaneSide = UNITY_ACCESS_INSTANCED_PROP(Props, _ClipPlaneSide);
                 float4 clipPlane = UNITY_ACCESS_INSTANCED_PROP(Props, _ClipPlane);
                 primitiveDistance = min(primitiveDistance, PointVsPlane(i.worldPosition.xyz, clipPlane) * clipPlaneSide);
-        #endif
-        #if defined(_CLIPPING_SPHERE)
+                #endif
+                #if defined(_CLIPPING_SPHERE)
                 fixed clipSphereSide = UNITY_ACCESS_INSTANCED_PROP(Props, _ClipSphereSide);
                 float4x4 clipSphereInverseTransform = UNITY_ACCESS_INSTANCED_PROP(Props, _ClipSphereInverseTransform);
                 primitiveDistance = min(primitiveDistance, PointVsSphere(i.worldPosition.xyz, clipSphereInverseTransform) * clipSphereSide);
-        #endif
-        #if defined(_CLIPPING_BOX)
+                #endif
+                #if defined(_CLIPPING_BOX)
                 fixed clipBoxSide = UNITY_ACCESS_INSTANCED_PROP(Props, _ClipBoxSide);
                 float4x4 clipBoxInverseTransform = UNITY_ACCESS_INSTANCED_PROP(Props, _ClipBoxInverseTransform);
                 primitiveDistance = min(primitiveDistance, PointVsBox(i.worldPosition.xyz, clipBoxInverseTransform) * clipBoxSide);
-        #endif
+                #endif
                 col *= step(0.0, primitiveDistance);
-        #endif
+                #endif
 
                 clip(col.a - 0.01);
-                    
+
                 return col;
             }
             ENDCG

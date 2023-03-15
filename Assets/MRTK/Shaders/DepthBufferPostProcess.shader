@@ -16,7 +16,7 @@ Shader "Mixed Reality Toolkit/Depth Buffer Viewer"
     {
         Pass
         {
-        CGPROGRAM
+            CGPROGRAM
             #pragma vertex vert_img
             #pragma fragment frag
 
@@ -29,7 +29,7 @@ Shader "Mixed Reality Toolkit/Depth Buffer Viewer"
             {
                 return Linear01Depth(SAMPLE_DEPTH_TEXTURE(_DepthTex, i.uv));
             }
-        ENDCG
+            ENDCG
         }
     }
 }

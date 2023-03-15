@@ -5,7 +5,6 @@ namespace CityAR
 {
     public class VisualizationCreator : MonoBehaviour
     {
-
         public GameObject districtPrefab;
         private DataObject _dataObject;
         private GameObject _platform;
@@ -50,20 +49,24 @@ namespace CityAR
 
                 BuildDistrictBlock(entry, false);
 
-                foreach (Entry subEntry in entry.files) {
+                foreach (Entry subEntry in entry.files)
+                {
                     subEntry.x = x;
                     subEntry.z = z;
-                    
+
                     if (subEntry.type.Equals("Dir"))
                     {
                         float ratio = subEntry.numberOfLines / dirLocs;
                         subEntry.deepth = entry.deepth + 1;
 
-                        if (splitHorizontal) {
+                        if (splitHorizontal)
+                        {
                             subEntry.w = ratio * entry.w; // split along horizontal axis
                             subEntry.h = entry.h;
                             x += subEntry.w;
-                        } else {
+                        }
+                        else
+                        {
                             subEntry.w = entry.w;
                             subEntry.h = ratio * entry.h; // split along vertical axis
                             z += subEntry.h;
@@ -73,6 +76,7 @@ namespace CityAR
                     {
                         subEntry.parentEntry = entry;
                     }
+
                     BuildDistrict(subEntry, !splitHorizontal);
                 }
 
@@ -84,6 +88,7 @@ namespace CityAR
                     {
                         entry.h = 1f - z;
                     }
+
                     entry.deepth += 1;
                     BuildDistrictBlock(entry, true);
                 }
@@ -95,6 +100,7 @@ namespace CityAR
                     {
                         entry.w = 1f - x;
                     }
+
                     entry.deepth += 1;
                     BuildDistrictBlock(entry, true);
                 }
@@ -111,10 +117,10 @@ namespace CityAR
             {
                 return;
             }
-            
+
             float w = entry.w; // w -> x coordinate
             float h = entry.h; // h -> z coordinate
-            
+
             if (w * h > 0)
             {
                 GameObject prefabInstance = Instantiate(districtPrefab, _platform.transform, true);
@@ -123,18 +129,17 @@ namespace CityAR
                 {
                     prefabInstance.name = entry.name;
                     prefabInstance.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = entry.color;
-                    prefabInstance.transform.localScale = new Vector3(entry.w, 1f,entry.h);
+                    prefabInstance.transform.localScale = new Vector3(entry.w, 1f, entry.h);
                     prefabInstance.transform.localPosition = new Vector3(entry.x, entry.deepth, entry.z);
                 }
                 else
                 {
-                    prefabInstance.name = entry.name+"Base";
-                    prefabInstance.transform.GetChild(0).rotation = Quaternion.Euler(90,0,0);
-                    prefabInstance.transform.localScale = new Vector3(entry.w, 1,entry.h);
-                    prefabInstance.transform.localPosition = new Vector3(entry.x, entry.deepth+0.001f, entry.z);
-
+                    prefabInstance.name = entry.name + "Base";
+                    prefabInstance.transform.GetChild(0).rotation = Quaternion.Euler(90, 0, 0);
+                    prefabInstance.transform.localScale = new Vector3(entry.w, 1, entry.h);
+                    prefabInstance.transform.localPosition = new Vector3(entry.x, entry.deepth + 0.001f, entry.z);
                 }
-                
+
                 Vector3 scale = prefabInstance.transform.localScale;
                 float scaleX = scale.x - (entry.deepth * 0.005f);
                 float scaleZ = scale.z - (entry.deepth * 0.005f);
@@ -142,7 +147,8 @@ namespace CityAR
                 float shiftZ = (scale.z - scaleZ) / 2f;
                 prefabInstance.transform.localScale = new Vector3(scaleX, scale.y, scaleZ);
                 Vector3 position = prefabInstance.transform.localPosition;
-                prefabInstance.transform.localPosition = new Vector3(position.x - shiftX, position.y, position.z + shiftZ);
+                prefabInstance.transform.localPosition =
+                    new Vector3(position.x - shiftX, position.y, position.z + shiftZ);
             }
         }
 
@@ -158,7 +164,7 @@ namespace CityAR
 
             return false;
         }
-        
+
         private Color GetColorForDepth(int depth)
         {
             Color color;

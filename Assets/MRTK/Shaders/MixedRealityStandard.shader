@@ -94,17 +94,17 @@ Shader "Mixed Reality Toolkit/Standard"
         _EnvironmentColorZ("Environment Color Z (RGB)", Color) = (0.0, 0.0, 1.0, 1.0)
 
         // Advanced options.
-        [Enum(RenderingMode)] _Mode("Rendering Mode", Float) = 0                                     // "Opaque"
-        [Enum(CustomRenderingMode)] _CustomMode("Mode", Float) = 0                                   // "Opaque"
-        [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("Source Blend", Float) = 1                 // "One"
-        [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("Destination Blend", Float) = 0            // "Zero"
-        [Enum(UnityEngine.Rendering.BlendOp)] _BlendOp("Blend Operation", Float) = 0                 // "Add"
-        [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest("Depth Test", Float) = 4                // "LessEqual"
-        [Enum(DepthWrite)] _ZWrite("Depth Write", Float) = 1                                         // "On"
-        _ZOffsetFactor("Depth Offset Factor", Float) = 0                                             // "Zero"
-        _ZOffsetUnits("Depth Offset Units", Float) = 0                                               // "Zero"
+        [Enum(RenderingMode)] _Mode("Rendering Mode", Float) = 0 // "Opaque"
+        [Enum(CustomRenderingMode)] _CustomMode("Mode", Float) = 0 // "Opaque"
+        [Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("Source Blend", Float) = 1 // "One"
+        [Enum(UnityEngine.Rendering.BlendMode)] _DstBlend("Destination Blend", Float) = 0 // "Zero"
+        [Enum(UnityEngine.Rendering.BlendOp)] _BlendOp("Blend Operation", Float) = 0 // "Add"
+        [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest("Depth Test", Float) = 4 // "LessEqual"
+        [Enum(DepthWrite)] _ZWrite("Depth Write", Float) = 1 // "On"
+        _ZOffsetFactor("Depth Offset Factor", Float) = 0 // "Zero"
+        _ZOffsetUnits("Depth Offset Units", Float) = 0 // "Zero"
         [Enum(UnityEngine.Rendering.ColorWriteMask)] _ColorWriteMask("Color Write Mask", Float) = 15 // "All"
-        [Enum(UnityEngine.Rendering.CullMode)] _CullMode("Cull Mode", Float) = 2                     // "Back"
+        [Enum(UnityEngine.Rendering.CullMode)] _CullMode("Cull Mode", Float) = 2 // "Back"
         _RenderQueueOverride("Render Queue Override", Range(-1.0, 5000)) = -1
         [Toggle(_IGNORE_Z_SCALE)] _IgnoreZScale("Ignore Z Scale", Float) = 0.0
         [Toggle(_STENCIL)] _Stencil("Enable Stencil Testing", Float) = 0.0
@@ -118,7 +118,10 @@ Shader "Mixed Reality Toolkit/Standard"
         Pass
         {
             Name "Main"
-            Tags{ "RenderType" = "Opaque" "LightMode" = "ForwardBase" }
+            Tags
+            {
+                "RenderType" = "Opaque" "LightMode" = "ForwardBase"
+            }
             LOD 100
             Blend[_SrcBlend][_DstBlend]
             BlendOp[_BlendOp]
@@ -136,7 +139,6 @@ Shader "Mixed Reality Toolkit/Standard"
             }
 
             CGPROGRAM
-
             #pragma vertex vert
             #pragma fragment frag
 
@@ -193,136 +195,136 @@ Shader "Mixed Reality Toolkit/Standard"
             // This define will get commented in by the UpgradeShaderForUniversalRenderPipeline method.
             //#define _RENDER_PIPELINE
 
-#if defined(_TRIPLANAR_MAPPING) || defined(_DIRECTIONAL_LIGHT) || defined(_SPHERICAL_HARMONICS) || defined(_REFLECTIONS) || defined(_RIM_LIGHT) || defined(_PROXIMITY_LIGHT) || defined(_ENVIRONMENT_COLORING)
+            #if defined(_TRIPLANAR_MAPPING) || defined(_DIRECTIONAL_LIGHT) || defined(_SPHERICAL_HARMONICS) || defined(_REFLECTIONS) || defined(_RIM_LIGHT) || defined(_PROXIMITY_LIGHT) || defined(_ENVIRONMENT_COLORING)
             #define _NORMAL
-#else
+            #else
             #undef _NORMAL
-#endif
+            #endif
 
-#if defined(_CLIPPING_PLANE) || defined(_CLIPPING_SPHERE) || defined(_CLIPPING_BOX)
+            #if defined(_CLIPPING_PLANE) || defined(_CLIPPING_SPHERE) || defined(_CLIPPING_BOX)
         #define _CLIPPING_PRIMITIVE
-#else
-        #undef _CLIPPING_PRIMITIVE
-#endif
+            #else
+            #undef _CLIPPING_PRIMITIVE
+            #endif
 
-#if defined(_NORMAL) || defined(_CLIPPING_PRIMITIVE) || defined(_NEAR_PLANE_FADE) || defined(_HOVER_LIGHT) || defined(_PROXIMITY_LIGHT)
+            #if defined(_NORMAL) || defined(_CLIPPING_PRIMITIVE) || defined(_NEAR_PLANE_FADE) || defined(_HOVER_LIGHT) || defined(_PROXIMITY_LIGHT)
             #define _WORLD_POSITION
-#else
+            #else
             #undef _WORLD_POSITION
-#endif
+            #endif
 
-#if defined(UNITY_UI_CLIP_RECT)
+            #if defined(UNITY_UI_CLIP_RECT)
             #define _LOCAL_POSITION
-#else
+            #else
             #undef _LOCAL_POSITION
-#endif
+            #endif
 
-#if defined(_ALPHATEST_ON) || defined(UNITY_UI_CLIP_RECT) || defined(_CLIPPING_PRIMITIVE) || defined(_ROUND_CORNERS)
+            #if defined(_ALPHATEST_ON) || defined(UNITY_UI_CLIP_RECT) || defined(_CLIPPING_PRIMITIVE) || defined(_ROUND_CORNERS)
             #define _ALPHA_CLIP
-#else
+            #else
             #undef _ALPHA_CLIP
-#endif
+            #endif
 
-#if defined(_ALPHABLEND_ON)
+            #if defined(_ALPHABLEND_ON)
             #define _TRANSPARENT
             #undef _ALPHA_CLIP
-#else
+            #else
             #undef _TRANSPARENT
-#endif
+            #endif
 
-#if defined(_VERTEX_EXTRUSION) || defined(_ROUND_CORNERS) || defined(_BORDER_LIGHT)
+            #if defined(_VERTEX_EXTRUSION) || defined(_ROUND_CORNERS) || defined(_BORDER_LIGHT)
             #define _SCALE
-#else
+            #else
             #undef _SCALE
-#endif
+            #endif
 
-#if defined(_DIRECTIONAL_LIGHT) || defined(_RIM_LIGHT)
+            #if defined(_DIRECTIONAL_LIGHT) || defined(_RIM_LIGHT)
             #define _FRESNEL
-#else
+            #else
             #undef _FRESNEL
-#endif
+            #endif
 
-#if defined(_ROUND_CORNERS) || defined(_BORDER_LIGHT) || defined(_INNER_GLOW)
+            #if defined(_ROUND_CORNERS) || defined(_BORDER_LIGHT) || defined(_INNER_GLOW)
             #define _DISTANCE_TO_EDGE
-#else
+            #else
             #undef _DISTANCE_TO_EDGE
-#endif
+            #endif
 
-#if !defined(_DISABLE_ALBEDO_MAP) || defined(_TRIPLANAR_MAPPING) || defined(_CHANNEL_MAP) || defined(_NORMAL_MAP) || defined(_DISTANCE_TO_EDGE) || defined(_IRIDESCENCE)
+            #if !defined(_DISABLE_ALBEDO_MAP) || defined(_TRIPLANAR_MAPPING) || defined(_CHANNEL_MAP) || defined(_NORMAL_MAP) || defined(_DISTANCE_TO_EDGE) || defined(_IRIDESCENCE)
             #define _UV
-#else
+            #else
             #undef _UV
-#endif
+            #endif
 
             struct appdata_t
             {
                 float4 vertex : POSITION;
                 // The default UV channel used for texturing.
                 float2 uv : TEXCOORD0;
-#if defined(LIGHTMAP_ON)
+                #if defined(LIGHTMAP_ON)
                 // Reserved for Unity's light map UVs.
                 float2 uv1 : TEXCOORD1;
-#endif
+                #endif
                 // Used for smooth normal data (or UGUI scaling data).
                 float4 uv2 : TEXCOORD2;
                 // Used for UGUI scaling data.
                 float2 uv3 : TEXCOORD3;
-#if defined(_VERTEX_COLORS)
+                #if defined(_VERTEX_COLORS)
                 fixed4 color : COLOR0;
-#endif
+                #endif
                 fixed3 normal : NORMAL;
-#if defined(_NORMAL_MAP)
+                #if defined(_NORMAL_MAP)
                 fixed4 tangent : TANGENT;
-#endif
+                #endif
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct v2f
             {
                 float4 position : SV_POSITION;
-#if defined(_BORDER_LIGHT)
+                #if defined(_BORDER_LIGHT)
                 float4 uv : TEXCOORD0;
-#elif defined(_UV)
+                #elif defined(_UV)
                 float2 uv : TEXCOORD0;
-#endif
-#if defined(LIGHTMAP_ON)
+                #endif
+                #if defined(LIGHTMAP_ON)
                 float2 lightMapUV : TEXCOORD1;
-#endif
-#if defined(_VERTEX_COLORS)
+                #endif
+                #if defined(_VERTEX_COLORS)
                 fixed4 color : COLOR0;
-#endif
-#if defined(_SPHERICAL_HARMONICS)
+                #endif
+                #if defined(_SPHERICAL_HARMONICS)
                 fixed3 ambient : COLOR1;
-#endif
-#if defined(_IRIDESCENCE)
+                #endif
+                #if defined(_IRIDESCENCE)
                 fixed3 iridescentColor : COLOR2;
-#endif
-#if defined(_WORLD_POSITION)
-#if defined(_NEAR_PLANE_FADE)
+                #endif
+                #if defined(_WORLD_POSITION)
+                #if defined(_NEAR_PLANE_FADE)
                 float4 worldPosition : TEXCOORD2;
-#else
+                #else
                 float3 worldPosition : TEXCOORD2;
-#endif
-#endif
-#if defined(_LOCAL_POSITION)
+                #endif
+                #endif
+                #if defined(_LOCAL_POSITION)
                 float3 localPosition : TEXCOORD7;
-#endif
-#if defined(_SCALE)
+                #endif
+                #if defined(_SCALE)
                 float3 scale : TEXCOORD3;
-#endif
-#if defined(_NORMAL)
-#if defined(_TRIPLANAR_MAPPING)
+                #endif
+                #if defined(_NORMAL)
+                #if defined(_TRIPLANAR_MAPPING)
                 fixed3 worldNormal : COLOR3;
                 fixed3 triplanarNormal : COLOR4;
                 float3 triplanarPosition : TEXCOORD6;
-#elif defined(_NORMAL_MAP)
+                #elif defined(_NORMAL_MAP)
                 fixed3 tangentX : COLOR3;
                 fixed3 tangentY : COLOR4;
                 fixed3 tangentZ : COLOR5;
-#else
+                #else
                 fixed3 worldNormal : COLOR3;
-#endif
-#endif
+                #endif
+                #endif
                 UNITY_VERTEX_INPUT_INSTANCE_ID
                 UNITY_VERTEX_OUTPUT_STEREO
             };
@@ -330,215 +332,220 @@ Shader "Mixed Reality Toolkit/Standard"
             UNITY_INSTANCING_BUFFER_START(Props)
             UNITY_DEFINE_INSTANCED_PROP(float4, _Color)
 
-#if defined(_CLIPPING_PLANE)
+            #if defined(_CLIPPING_PLANE)
             UNITY_DEFINE_INSTANCED_PROP(fixed, _ClipPlaneSide)
             UNITY_DEFINE_INSTANCED_PROP(float4, _ClipPlane)
-#endif
+            #endif
 
-#if defined(_CLIPPING_SPHERE)
+            #if defined(_CLIPPING_SPHERE)
             UNITY_DEFINE_INSTANCED_PROP(fixed, _ClipSphereSide)
             UNITY_DEFINE_INSTANCED_PROP(float4x4, _ClipSphereInverseTransform)
-#endif
+            #endif
 
-#if defined(_CLIPPING_BOX)
+            #if defined(_CLIPPING_BOX)
             UNITY_DEFINE_INSTANCED_PROP(fixed, _ClipBoxSide)
             UNITY_DEFINE_INSTANCED_PROP(float4x4, _ClipBoxInverseTransform)
-#endif
+            #endif
 
             UNITY_INSTANCING_BUFFER_END(Props)
 
             sampler2D _MainTex;
             fixed4 _MainTex_ST;
 
-#if defined(_ALPHA_CLIP)
+            #if defined(_ALPHA_CLIP)
             fixed _Cutoff;
-#endif
+            #endif
 
-#if defined(UNITY_UI_CLIP_RECT)
+            #if defined(UNITY_UI_CLIP_RECT)
             float4 _ClipRect;
-#endif
+            #endif
 
             fixed _Metallic;
             fixed _Smoothness;
 
-#if defined(_CHANNEL_MAP)
+            #if defined(_CHANNEL_MAP)
             sampler2D _ChannelMap;
-#endif
+            #endif
 
-#if defined(_NORMAL_MAP)
+            #if defined(_NORMAL_MAP)
             sampler2D _NormalMap;
             float _NormalMapScale;
-#endif
+            #endif
 
-#if defined(_EMISSION)
+            #if defined(_EMISSION)
             fixed4 _EmissiveColor;
-#endif
+            #endif
 
-#if defined(_USE_SSAA)
+            #if defined(_USE_SSAA)
             float _MipmapBias;
-#endif
+            #endif
 
-#if defined(_TRIPLANAR_MAPPING)
+            #if defined(_TRIPLANAR_MAPPING)
             float _TriplanarMappingBlendSharpness;
-#endif
+            #endif
 
-#if defined(_DIRECTIONAL_LIGHT)
-#if defined(_RENDER_PIPELINE)
+            #if defined(_DIRECTIONAL_LIGHT)
+            #if defined(_RENDER_PIPELINE)
             CBUFFER_START(_LightBuffer)
             float4 _MainLightPosition;
             half4 _MainLightColor;
             CBUFFER_END
-#else
+            #else
             fixed4 _LightColor0;
-#endif
-#endif
+            #endif
+            #endif
 
-#if defined(_REFRACTION)
+            #if defined(_REFRACTION)
             fixed _RefractiveIndex;
-#endif
+            #endif
 
-#if defined(_RIM_LIGHT)
+            #if defined(_RIM_LIGHT)
             fixed3 _RimColor;
             fixed _RimPower;
-#endif
+            #endif
 
-#if defined(_VERTEX_EXTRUSION)
+            #if defined(_VERTEX_EXTRUSION)
             float _VertexExtrusionValue;
-#endif
+            #endif
 
 
-#if defined(_CLIPPING_PRIMITIVE)
+            #if defined(_CLIPPING_PRIMITIVE)
             float _BlendedClippingWidth;
-#endif
+            #endif
 
-#if defined(_CLIPPING_BORDER)
+            #if defined(_CLIPPING_BORDER)
             fixed _ClippingBorderWidth;
             fixed3 _ClippingBorderColor;
-#endif
+            #endif
 
-#if defined(_NEAR_PLANE_FADE)
+            #if defined(_NEAR_PLANE_FADE)
             float _FadeBeginDistance;
             float _FadeCompleteDistance;
             fixed _FadeMinValue;
-#endif
+            #endif
 
-#if defined(_HOVER_LIGHT) || defined(_NEAR_LIGHT_FADE)
-#if defined(_HOVER_LIGHT_HIGH)
+            #if defined(_HOVER_LIGHT) || defined(_NEAR_LIGHT_FADE)
+            #if defined(_HOVER_LIGHT_HIGH)
 #define HOVER_LIGHT_COUNT 10
-#elif defined(_HOVER_LIGHT_MEDIUM)
+            #elif defined(_HOVER_LIGHT_MEDIUM)
 #define HOVER_LIGHT_COUNT 4
-#else
-#define HOVER_LIGHT_COUNT 2
-#endif
-#define HOVER_LIGHT_DATA_SIZE 2
+            #else
+            #define HOVER_LIGHT_COUNT 2
+            #endif
+            #define HOVER_LIGHT_DATA_SIZE 2
             float4 _HoverLightData[HOVER_LIGHT_COUNT * HOVER_LIGHT_DATA_SIZE];
-#if defined(_HOVER_COLOR_OVERRIDE)
+            #if defined(_HOVER_COLOR_OVERRIDE)
             fixed3 _HoverColorOverride;
-#endif
-#endif
+            #endif
+            #endif
 
-#if defined(_PROXIMITY_LIGHT) || defined(_NEAR_LIGHT_FADE)
-#define PROXIMITY_LIGHT_COUNT 2
-#define PROXIMITY_LIGHT_DATA_SIZE 6
+            #if defined(_PROXIMITY_LIGHT) || defined(_NEAR_LIGHT_FADE)
+            #define PROXIMITY_LIGHT_COUNT 2
+            #define PROXIMITY_LIGHT_DATA_SIZE 6
             float4 _ProximityLightData[PROXIMITY_LIGHT_COUNT * PROXIMITY_LIGHT_DATA_SIZE];
-#if defined(_PROXIMITY_LIGHT_COLOR_OVERRIDE)
+            #if defined(_PROXIMITY_LIGHT_COLOR_OVERRIDE)
             float4 _ProximityLightCenterColorOverride;
             float4 _ProximityLightMiddleColorOverride;
             float4 _ProximityLightOuterColorOverride;
-#endif
-#endif
+            #endif
+            #endif
 
-#if defined(_HOVER_LIGHT) || defined(_PROXIMITY_LIGHT) || defined(_BORDER_LIGHT)
+            #if defined(_HOVER_LIGHT) || defined(_PROXIMITY_LIGHT) || defined(_BORDER_LIGHT)
             fixed _FluentLightIntensity;
-#endif
+            #endif
 
-#if defined(_ROUND_CORNERS)
-#if defined(_INDEPENDENT_CORNERS)
+            #if defined(_ROUND_CORNERS)
+            #if defined(_INDEPENDENT_CORNERS)
             float4 _RoundCornersRadius;
-#else
+            #else
             fixed _RoundCornerRadius;
-#endif
+            #endif
             fixed _RoundCornerMargin;
-#endif
+            #endif
 
-#if defined(_BORDER_LIGHT)
+            #if defined(_BORDER_LIGHT)
             fixed _BorderWidth;
             fixed _BorderMinValue;
-#endif
+            #endif
 
-#if defined(_BORDER_LIGHT_OPAQUE)
+            #if defined(_BORDER_LIGHT_OPAQUE)
             fixed _BorderLightOpaqueAlpha;
-#endif
+            #endif
 
-#if defined(_ROUND_CORNERS) || defined(_BORDER_LIGHT)
+            #if defined(_ROUND_CORNERS) || defined(_BORDER_LIGHT)
             float _EdgeSmoothingValue;
-#endif
+            #endif
 
-#if defined(_INNER_GLOW)
+            #if defined(_INNER_GLOW)
             fixed4 _InnerGlowColor;
             fixed _InnerGlowPower;
-#endif
+            #endif
 
-#if defined(_IRIDESCENCE)
+            #if defined(_IRIDESCENCE)
             sampler2D _IridescentSpectrumMap;
             fixed _IridescenceIntensity;
             fixed _IridescenceThreshold;
             fixed _IridescenceAngle;
-#endif
+            #endif
 
-#if defined(_ENVIRONMENT_COLORING)
+            #if defined(_ENVIRONMENT_COLORING)
             fixed _EnvironmentColorThreshold;
             fixed _EnvironmentColorIntensity;
             fixed3 _EnvironmentColorX;
             fixed3 _EnvironmentColorY;
             fixed3 _EnvironmentColorZ;
-#endif
+            #endif
 
-#if defined(_DIRECTIONAL_LIGHT)
+            #if defined(_DIRECTIONAL_LIGHT)
             static const fixed _MinMetallicLightContribution = 0.7;
             static const fixed _IblContribution = 0.1;
-#endif
+            #endif
 
-#if defined(_SPECULAR_HIGHLIGHTS)
+            #if defined(_SPECULAR_HIGHLIGHTS)
             static const float _Shininess = 800.0;
-#endif
+            #endif
 
-#if defined(_FRESNEL)
+            #if defined(_FRESNEL)
             static const float _FresnelPower = 8.0;
-#endif
+            #endif
 
-#if defined(_NEAR_LIGHT_FADE)
+            #if defined(_NEAR_LIGHT_FADE)
             static const float _MaxNearLightDistance = 10.0;
 
             inline float NearLightDistance(float4 light, float3 worldPosition)
             {
                 return distance(worldPosition, light.xyz) + ((1.0 - light.w) * _MaxNearLightDistance);
             }
-#endif
+            #endif
 
-#if defined(_HOVER_LIGHT)
+            #if defined(_HOVER_LIGHT)
             inline float HoverLight(float4 hoverLight, float inverseRadius, float3 worldPosition)
             {
                 return (1.0 - saturate(length(hoverLight.xyz - worldPosition) * inverseRadius)) * hoverLight.w;
             }
-#endif
+            #endif
 
-#if defined(_PROXIMITY_LIGHT)
-            inline float ProximityLight(float4 proximityLight, float4 proximityLightParams, float4 proximityLightPulseParams, float3 worldPosition, float3 worldNormal, out fixed colorValue)
+            #if defined(_PROXIMITY_LIGHT)
+            inline float ProximityLight(float4 proximityLight, float4 proximityLightParams,
+                                        float4 proximityLightPulseParams, float3 worldPosition, float3 worldNormal,
+                                        out fixed colorValue)
             {
                 float proximityLightDistance = dot(proximityLight.xyz - worldPosition, worldNormal);
-#if defined(_PROXIMITY_LIGHT_TWO_SIDED)
+                #if defined(_PROXIMITY_LIGHT_TWO_SIDED)
                 worldNormal = proximityLightDistance < 0.0 ? -worldNormal : worldNormal;
                 proximityLightDistance = abs(proximityLightDistance);
-#endif
+                #endif
                 float normalizedProximityLightDistance = saturate(proximityLightDistance * proximityLightParams.y);
                 float3 projectedProximityLight = proximityLight.xyz - (worldNormal * abs(proximityLightDistance));
                 float projectedProximityLightDistance = length(projectedProximityLight - worldPosition);
                 float attenuation = (1.0 - normalizedProximityLightDistance) * proximityLight.w;
                 colorValue = saturate(projectedProximityLightDistance * proximityLightParams.z);
-                float pulse = step(proximityLightPulseParams.x, projectedProximityLightDistance) * proximityLightPulseParams.y;
+                float pulse = step(proximityLightPulseParams.x, projectedProximityLightDistance) *
+                    proximityLightPulseParams.y;
 
-                return smoothstep(1.0, 0.0, projectedProximityLightDistance / (proximityLightParams.x * max(pow(normalizedProximityLightDistance, 0.25), proximityLightParams.w))) * pulse * attenuation;
+                return smoothstep(
+                    1.0, 0.0, projectedProximityLightDistance / (proximityLightParams.x * max(
+                        pow(normalizedProximityLightDistance, 0.25), proximityLightParams.w))) * pulse * attenuation;
             }
 
             inline fixed3 MixProximityLightColor(fixed4 centerColor, fixed4 middleColor, fixed4 outerColor, fixed t)
@@ -546,9 +553,9 @@ Shader "Mixed Reality Toolkit/Standard"
                 fixed3 color = lerp(centerColor.rgb, middleColor.rgb, smoothstep(centerColor.a, middleColor.a, t));
                 return lerp(color, outerColor, smoothstep(middleColor.a, outerColor.a, t));
             }
-#endif
+            #endif
 
-#if defined(_ROUND_CORNERS)
+            #if defined(_ROUND_CORNERS)
             inline float PointVsRoundedBox(float2 position, float2 cornerCircleDistance, float cornerCircleRadius)
             {
                 return length(max(abs(position) - cornerCircleDistance, 0.0)) - cornerCircleRadius;
@@ -556,31 +563,36 @@ Shader "Mixed Reality Toolkit/Standard"
 
             inline float RoundCornersSmooth(float2 position, float2 cornerCircleDistance, float cornerCircleRadius)
             {
-                return smoothstep(1.0, 0.0, PointVsRoundedBox(position, cornerCircleDistance, cornerCircleRadius) / _EdgeSmoothingValue);
+                return smoothstep(
+                    1.0, 0.0,
+                    PointVsRoundedBox(position, cornerCircleDistance, cornerCircleRadius) / _EdgeSmoothingValue);
             }
 
             inline float RoundCorners(float2 position, float2 cornerCircleDistance, float cornerCircleRadius)
             {
-#if defined(_TRANSPARENT)
+                #if defined(_TRANSPARENT)
                 return RoundCornersSmooth(position, cornerCircleDistance, cornerCircleRadius);
-#else
+                #else
                 return (PointVsRoundedBox(position, cornerCircleDistance, cornerCircleRadius) < 0.0);
-#endif
+                #endif
             }
-#endif
+            #endif
 
-#if defined(_IRIDESCENCE)
-            fixed3 Iridescence(float tangentDotIncident, sampler2D spectrumMap, float threshold, float2 uv, float angle, float intensity)
+            #if defined(_IRIDESCENCE)
+            fixed3 Iridescence(float tangentDotIncident, sampler2D spectrumMap, float threshold, float2 uv, float angle,
+                               float intensity)
             {
                 float k = tangentDotIncident * 0.5 + 0.5;
-                float4 left = tex2D(spectrumMap, float2(lerp(0.0, 1.0 - threshold, k), 0.5), float2(0.0, 0.0), float2(0.0, 0.0));
-                float4 right = tex2D(spectrumMap, float2(lerp(threshold, 1.0, k), 0.5), float2(0.0, 0.0), float2(0.0, 0.0));
+                float4 left = tex2D(spectrumMap, float2(lerp(0.0, 1.0 - threshold, k), 0.5), float2(0.0, 0.0),
+                                    float2(0.0, 0.0));
+                float4 right = tex2D(spectrumMap, float2(lerp(threshold, 1.0, k), 0.5), float2(0.0, 0.0),
+                                     float2(0.0, 0.0));
 
                 float2 XY = uv - float2(0.5, 0.5);
                 float s = (cos(angle) * XY.x - sin(angle) * XY.y) / cos(angle);
                 return (left.rgb + s * (right.rgb - left.rgb)) * intensity;
             }
-#endif
+            #endif
 
             v2f vert(appdata_t v)
             {
@@ -592,19 +604,19 @@ Shader "Mixed Reality Toolkit/Standard"
 
                 float4 vertexPosition = v.vertex;
 
-#if defined(_WORLD_POSITION) || defined(_VERTEX_EXTRUSION)
+                #if defined(_WORLD_POSITION) || defined(_VERTEX_EXTRUSION)
                 float3 worldVertexPosition = mul(unity_ObjectToWorld, vertexPosition).xyz;
-#endif
+                #endif
 
-#if defined(_SCALE)
+                #if defined(_SCALE)
                 o.scale.x = length(mul(unity_ObjectToWorld, float4(1.0, 0.0, 0.0, 0.0)));
                 o.scale.y = length(mul(unity_ObjectToWorld, float4(0.0, 1.0, 0.0, 0.0)));
-#if defined(_IGNORE_Z_SCALE)
+                #if defined(_IGNORE_Z_SCALE)
                 o.scale.z = o.scale.x;
-#else
+                #else
                 o.scale.z = length(mul(unity_ObjectToWorld, float4(0.0, 0.0, 1.0, 0.0)));
-#endif
-#if !defined(_VERTEX_EXTRUSION_SMOOTH_NORMALS)
+                #endif
+                #if !defined(_VERTEX_EXTRUSION_SMOOTH_NORMALS)
                 // uv3.y will contain a negative value when rendered by a UGUI and ScaleMeshEffect.
                 if (v.uv3.y < 0.0)
                 {
@@ -612,37 +624,37 @@ Shader "Mixed Reality Toolkit/Standard"
                     o.scale.y *= v.uv2.y;
                     o.scale.z *= v.uv3.x;
                 }
-#endif
-#endif
+                #endif
+                #endif
 
                 fixed3 localNormal = v.normal;
 
-#if defined(_NORMAL) || defined(_VERTEX_EXTRUSION)
+                #if defined(_NORMAL) || defined(_VERTEX_EXTRUSION)
                 fixed3 worldNormal = UnityObjectToWorldNormal(localNormal);
-#endif
+                #endif
 
-#if defined(_VERTEX_EXTRUSION)
-#if defined(_VERTEX_EXTRUSION_SMOOTH_NORMALS)
+                #if defined(_VERTEX_EXTRUSION)
+                #if defined(_VERTEX_EXTRUSION_SMOOTH_NORMALS)
                 worldVertexPosition += UnityObjectToWorldNormal(v.uv2 * o.scale) * _VertexExtrusionValue;
-#else
+                #else
                 worldVertexPosition += worldNormal * _VertexExtrusionValue;
-#endif
+                #endif
                 vertexPosition = mul(unity_WorldToObject, float4(worldVertexPosition, 1.0));
-#endif
+                #endif
 
                 o.position = UnityObjectToClipPos(vertexPosition);
 
-#if defined(_WORLD_POSITION)
+                #if defined(_WORLD_POSITION)
                 o.worldPosition.xyz = worldVertexPosition;
-#endif
+                #endif
 
-#if defined(_LOCAL_POSITION)
+                #if defined(_LOCAL_POSITION)
                 o.localPosition.xyz = vertexPosition;
-#endif
+                #endif
 
-#if defined(_NEAR_PLANE_FADE)
+                #if defined(_NEAR_PLANE_FADE)
                 float rangeInverse = 1.0 / (_FadeBeginDistance - _FadeCompleteDistance);
-#if defined(_NEAR_LIGHT_FADE)
+                #if defined(_NEAR_LIGHT_FADE)
                 float fadeDistance = _MaxNearLightDistance;
 
                 [unroll]
@@ -656,20 +668,22 @@ Shader "Mixed Reality Toolkit/Standard"
                 for (int proximityLightIndex = 0; proximityLightIndex < PROXIMITY_LIGHT_COUNT; ++proximityLightIndex)
                 {
                     int dataIndex = proximityLightIndex * PROXIMITY_LIGHT_DATA_SIZE;
-                    fadeDistance = min(fadeDistance, NearLightDistance(_ProximityLightData[dataIndex], o.worldPosition));
+                    fadeDistance = min(fadeDistance,
+                                       NearLightDistance(_ProximityLightData[dataIndex], o.worldPosition));
                 }
-#else
+                #else
                 float fadeDistance = -UnityObjectToViewPos(vertexPosition).z;
-#endif
-                o.worldPosition.w = max(saturate(mad(fadeDistance, rangeInverse, -_FadeCompleteDistance * rangeInverse)), _FadeMinValue);
-#endif
+                #endif
+                o.worldPosition.w = max(
+                    saturate(mad(fadeDistance, rangeInverse, -_FadeCompleteDistance * rangeInverse)), _FadeMinValue);
+                #endif
 
-#if defined(_BORDER_LIGHT) || defined(_ROUND_CORNERS)
+                #if defined(_BORDER_LIGHT) || defined(_ROUND_CORNERS)
                 o.uv.xy = TRANSFORM_TEX(v.uv, _MainTex);
 
                 float minScale = min(min(o.scale.x, o.scale.y), o.scale.z);
 
-#if defined(_BORDER_LIGHT) 
+                #if defined(_BORDER_LIGHT)
                 float maxScale = max(max(o.scale.x, o.scale.y), o.scale.z);
                 float minOverMiddleScale = minScale / (o.scale.x + o.scale.y + o.scale.z - minScale - maxScale);
 
@@ -678,96 +692,98 @@ Shader "Mixed Reality Toolkit/Standard"
                 float areaXY = o.scale.x * o.scale.y;
 
                 float borderWidth = _BorderWidth;
-#endif
+                #endif
 
                 if (abs(localNormal.x) == 1.0) // Y,Z plane.
                 {
                     o.scale.x = o.scale.z;
                     o.scale.y = o.scale.y;
 
-#if defined(_BORDER_LIGHT) 
+                    #if defined(_BORDER_LIGHT)
                     if (areaYZ > areaXZ && areaYZ > areaXY)
                     {
                         borderWidth *= minOverMiddleScale;
                     }
-#endif
+                    #endif
                 }
                 else if (abs(localNormal.y) == 1.0) // X,Z plane.
                 {
                     o.scale.x = o.scale.x;
                     o.scale.y = o.scale.z;
 
-#if defined(_BORDER_LIGHT) 
+                    #if defined(_BORDER_LIGHT)
                     if (areaXZ > areaXY && areaXZ > areaYZ)
                     {
                         borderWidth *= minOverMiddleScale;
                     }
-#endif
+                    #endif
                 }
-                else  // X,Y plane.
+                else // X,Y plane.
                 {
                     o.scale.x = o.scale.x;
                     o.scale.y = o.scale.y;
 
-#if defined(_BORDER_LIGHT) 
+                    #if defined(_BORDER_LIGHT)
                     if (areaXY > areaYZ && areaXY > areaXZ)
                     {
                         borderWidth *= minOverMiddleScale;
                     }
-#endif
+                    #endif
                 }
 
                 o.scale.z = minScale;
 
-#if defined(_BORDER_LIGHT) 
+                #if defined(_BORDER_LIGHT)
                 float scaleRatio = min(o.scale.x, o.scale.y) / max(o.scale.x, o.scale.y);
                 o.uv.z = o.scale.x > o.scale.y ? 1.0 - (borderWidth * scaleRatio) : 1.0 - borderWidth;
                 o.uv.w = o.scale.x > o.scale.y ? 1.0 - borderWidth : 1.0 - (borderWidth * scaleRatio);
-#endif
-#elif defined(_UV)
+                #endif
+                #elif defined(_UV)
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-#endif
+                #endif
 
-#if defined(LIGHTMAP_ON)
+                #if defined(LIGHTMAP_ON)
                 o.lightMapUV.xy = v.uv1.xy * unity_LightmapST.xy + unity_LightmapST.zw;
-#endif
+                #endif
 
-#if defined(_VERTEX_COLORS)
+                #if defined(_VERTEX_COLORS)
                 o.color = v.color;
-#endif
+                #endif
 
-#if defined(_SPHERICAL_HARMONICS)
+                #if defined(_SPHERICAL_HARMONICS)
                 o.ambient = ShadeSH9(float4(worldNormal, 1.0));
-#endif
+                #endif
 
-#if defined(_IRIDESCENCE)
+                #if defined(_IRIDESCENCE)
                 float3 rightTangent = normalize(mul((float3x3)unity_ObjectToWorld, float3(1.0, 0.0, 0.0)));
-                float3 incidentWithCenter = normalize(mul(unity_ObjectToWorld, float4(0.0, 0.0, 0.0, 1.0)) - _WorldSpaceCameraPos);
+                float3 incidentWithCenter = normalize(
+                    mul(unity_ObjectToWorld, float4(0.0, 0.0, 0.0, 1.0)) - _WorldSpaceCameraPos);
                 float tangentDotIncident = dot(rightTangent, incidentWithCenter);
-                o.iridescentColor = Iridescence(tangentDotIncident, _IridescentSpectrumMap, _IridescenceThreshold, v.uv, _IridescenceAngle, _IridescenceIntensity);
-#endif
+                o.iridescentColor = Iridescence(tangentDotIncident, _IridescentSpectrumMap, _IridescenceThreshold, v.uv,
+                                                _IridescenceAngle, _IridescenceIntensity);
+                #endif
 
-#if defined(_NORMAL)
-#if defined(_TRIPLANAR_MAPPING)
+                #if defined(_NORMAL)
+                #if defined(_TRIPLANAR_MAPPING)
                 o.worldNormal = worldNormal;
-#if defined(_LOCAL_SPACE_TRIPLANAR_MAPPING)
+                #if defined(_LOCAL_SPACE_TRIPLANAR_MAPPING)
                 o.triplanarNormal = localNormal;
                 o.triplanarPosition = vertexPosition;
-#else
+                #else
                 o.triplanarNormal = worldNormal;
                 o.triplanarPosition = o.worldPosition;
-#endif
-#elif defined(_NORMAL_MAP)
+                #endif
+                #elif defined(_NORMAL_MAP)
                 fixed3 worldTangent = UnityObjectToWorldDir(v.tangent.xyz);
                 fixed tangentSign = v.tangent.w * unity_WorldTransformParams.w;
                 fixed3 worldBitangent = cross(worldNormal, worldTangent) * tangentSign;
                 o.tangentX = fixed3(worldTangent.x, worldBitangent.x, worldNormal.x);
                 o.tangentY = fixed3(worldTangent.y, worldBitangent.y, worldNormal.y);
                 o.tangentZ = fixed3(worldTangent.z, worldBitangent.z, worldNormal.z);
-#else
+                #else
                 o.worldNormal = worldNormal;
-#endif
-#endif
+                #endif
+                #endif
 
                 return o;
             }
@@ -776,7 +792,7 @@ Shader "Mixed Reality Toolkit/Standard"
             {
                 UNITY_SETUP_INSTANCE_ID(i);
 
-#if defined(_TRIPLANAR_MAPPING)
+                #if defined(_TRIPLANAR_MAPPING)
                 // Calculate triplanar uvs and apply texture scale and offset values like TRANSFORM_TEX.
                 fixed3 triplanarBlend = pow(abs(i.triplanarNormal), _TriplanarMappingBlendSharpness);
                 triplanarBlend /= dot(triplanarBlend, fixed3(1.0, 1.0, 1.0));
@@ -789,18 +805,18 @@ Shader "Mixed Reality Toolkit/Standard"
                 uvX.x *= axisSign.x;
                 uvY.x *= axisSign.y;
                 uvZ.x *= -axisSign.z;
-#endif
+                #endif
 
-            // Texturing.
-#if defined(_DISABLE_ALBEDO_MAP)
+                // Texturing.
+                #if defined(_DISABLE_ALBEDO_MAP)
                 fixed4 albedo = fixed4(1.0, 1.0, 1.0, 1.0);
-#else
-#if defined(_TRIPLANAR_MAPPING)
+                #else
+                #if defined(_TRIPLANAR_MAPPING)
                 fixed4 albedo = tex2D(_MainTex, uvX) * triplanarBlend.x +
                                 tex2D(_MainTex, uvY) * triplanarBlend.y +
                                 tex2D(_MainTex, uvZ) * triplanarBlend.z;
-#else
-#if defined(_USE_SSAA)
+                #else
+                #if defined(_USE_SSAA)
                 // Does SSAA on the texture, implementation based off this article: https://medium.com/@bgolus/sharper-mipmapping-using-shader-based-supersampling-ed7aadb47bec
                 // per pixel screen space partial derivatives
                 float2 dx = ddx(i.uv.xy) * 0.25; // horizontal offset
@@ -812,70 +828,70 @@ Shader "Mixed Reality Toolkit/Standard"
                 albedo += tex2Dbias(_MainTex, float4(i.uv.xy + dx - dy, 0.0, _MipmapBias));
                 albedo += tex2Dbias(_MainTex, float4(i.uv.xy - dx - dy, 0.0, _MipmapBias));
                 albedo *= 0.25;
-#else
+                #else
                 fixed4 albedo = tex2D(_MainTex, i.uv);
-#endif
-#endif
-#endif
+                #endif
+                #endif
+                #endif
 
 
-#ifdef LIGHTMAP_ON
+                #ifdef LIGHTMAP_ON
                 albedo.rgb *= DecodeLightmap(UNITY_SAMPLE_TEX2D(unity_Lightmap, i.lightMapUV));
-#endif
+                #endif
 
-#if defined(_CHANNEL_MAP)
+                #if defined(_CHANNEL_MAP)
                 fixed4 channel = tex2D(_ChannelMap, i.uv);
                 _Metallic = channel.r;
                 albedo.rgb *= channel.g;
                 _Smoothness = channel.a;
-#else
-#if defined(_METALLIC_TEXTURE_ALBEDO_CHANNEL_A)
+                #else
+                #if defined(_METALLIC_TEXTURE_ALBEDO_CHANNEL_A)
                 _Metallic = albedo.a;
                 albedo.a = 1.0;
-#elif defined(_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A)
+                #elif defined(_SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A)
                 _Smoothness = albedo.a;
                 albedo.a = 1.0;
-#endif 
-#endif
+                #endif
+                #endif
 
                 // Primitive clipping.
-#if defined(_CLIPPING_PRIMITIVE)
+                #if defined(_CLIPPING_PRIMITIVE)
                 float primitiveDistance = 1.0;
-#if defined(_CLIPPING_PLANE)
+                #if defined(_CLIPPING_PLANE)
                 fixed clipPlaneSide = UNITY_ACCESS_INSTANCED_PROP(Props, _ClipPlaneSide);
                 float4 clipPlane = UNITY_ACCESS_INSTANCED_PROP(Props, _ClipPlane);
                 primitiveDistance = min(primitiveDistance, PointVsPlane(i.worldPosition.xyz, clipPlane) * clipPlaneSide);
-#endif
-#if defined(_CLIPPING_SPHERE)
+                #endif
+                #if defined(_CLIPPING_SPHERE)
                 fixed clipSphereSide = UNITY_ACCESS_INSTANCED_PROP(Props, _ClipSphereSide);
                 float4x4 clipSphereInverseTransform = UNITY_ACCESS_INSTANCED_PROP(Props, _ClipSphereInverseTransform);
                 primitiveDistance = min(primitiveDistance, PointVsSphere(i.worldPosition.xyz, clipSphereInverseTransform) * clipSphereSide);
-#endif
-#if defined(_CLIPPING_BOX)
+                #endif
+                #if defined(_CLIPPING_BOX)
                 fixed clipBoxSide = UNITY_ACCESS_INSTANCED_PROP(Props, _ClipBoxSide);
                 float4x4 clipBoxInverseTransform = UNITY_ACCESS_INSTANCED_PROP(Props, _ClipBoxInverseTransform);
                 primitiveDistance = min(primitiveDistance, PointVsBox(i.worldPosition.xyz, clipBoxInverseTransform) * clipBoxSide);
-#endif
-#if defined(_CLIPPING_BORDER)
+                #endif
+                #if defined(_CLIPPING_BORDER)
                 fixed3 primitiveBorderColor = lerp(_ClippingBorderColor, fixed3(0.0, 0.0, 0.0), primitiveDistance / _ClippingBorderWidth);
                 albedo.rgb += primitiveBorderColor * (primitiveDistance < _ClippingBorderWidth ? 1.0 : 0.0);
-#endif
-#endif
+                #endif
+                #endif
 
-#if defined(_DISTANCE_TO_EDGE)
+                #if defined(_DISTANCE_TO_EDGE)
                 fixed2 distanceToEdge;
                 distanceToEdge.x = abs(i.uv.x - 0.5) * 2.0;
                 distanceToEdge.y = abs(i.uv.y - 0.5) * 2.0;
-#endif
+                #endif
 
                 // Rounded corner clipping.
-#if defined(_ROUND_CORNERS)
+                #if defined(_ROUND_CORNERS)
                 float2 halfScale = i.scale.xy * 0.5;
                 float2 roundCornerPosition = distanceToEdge * halfScale;
 
                 fixed currentCornerRadius;
 
-#if defined(_INDEPENDENT_CORNERS)
+                #if defined(_INDEPENDENT_CORNERS)
 
                 _RoundCornersRadius = clamp(_RoundCornersRadius, 0, 0.5);
 
@@ -901,37 +917,37 @@ Shader "Mixed Reality Toolkit/Standard"
                         currentCornerRadius = _RoundCornersRadius.z;
                     }
                 }
-#else 
+                #else
                 currentCornerRadius = _RoundCornerRadius;
-#endif
+                #endif
 
                 float cornerCircleRadius = saturate(max(currentCornerRadius - _RoundCornerMargin, 0.01)) * i.scale.z;
 
                 float2 cornerCircleDistance = halfScale - (_RoundCornerMargin * i.scale.z) - cornerCircleRadius;
 
                 float roundCornerClip = RoundCorners(roundCornerPosition, cornerCircleDistance, cornerCircleRadius);
-#endif
+                #endif
 
                 albedo *= UNITY_ACCESS_INSTANCED_PROP(Props, _Color);
 
-#if defined(_VERTEX_COLORS)
+                #if defined(_VERTEX_COLORS)
                 albedo *= i.color;
-#endif
+                #endif
 
-#if defined(_IRIDESCENCE)
+                #if defined(_IRIDESCENCE)
                 albedo.rgb += i.iridescentColor;
-#endif
+                #endif
 
                 // Normal calculation.
-#if defined(_NORMAL)
+                #if defined(_NORMAL)
                 fixed3 worldViewDir = normalize(UnityWorldSpaceViewDir(i.worldPosition.xyz));
-#if defined(_REFLECTIONS) || defined(_ENVIRONMENT_COLORING)
+                #if defined(_REFLECTIONS) || defined(_ENVIRONMENT_COLORING)
                 fixed3 incident = -worldViewDir;
-#endif
+                #endif
                 fixed3 worldNormal;
 
-#if defined(_NORMAL_MAP)
-#if defined(_TRIPLANAR_MAPPING)
+                #if defined(_NORMAL_MAP)
+                #if defined(_TRIPLANAR_MAPPING)
                 fixed3 tangentNormalX = UnpackScaleNormal(tex2D(_NormalMap, uvX), _NormalMapScale);
                 fixed3 tangentNormalY = UnpackScaleNormal(tex2D(_NormalMap, uvY), _NormalMapScale);
                 fixed3 tangentNormalZ = UnpackScaleNormal(tex2D(_NormalMap, uvZ), _NormalMapScale);
@@ -946,71 +962,77 @@ Shader "Mixed Reality Toolkit/Standard"
 
                 // Swizzle tangent normals to match world normal and blend together.
                 worldNormal = normalize(tangentNormalX.zyx * triplanarBlend.x +
-                                        tangentNormalY.xzy * triplanarBlend.y +
-                                        tangentNormalZ.xyz * triplanarBlend.z);
-#else
+                    tangentNormalY.xzy * triplanarBlend.y +
+                    tangentNormalZ.xyz * triplanarBlend.z);
+                #else
                 fixed3 tangentNormal = UnpackScaleNormal(tex2D(_NormalMap, i.uv), _NormalMapScale);
                 worldNormal.x = dot(i.tangentX, tangentNormal);
                 worldNormal.y = dot(i.tangentY, tangentNormal);
                 worldNormal.z = dot(i.tangentZ, tangentNormal);
                 worldNormal = normalize(worldNormal) * facing;
-#endif
-#else
+                #endif
+                #else
                 worldNormal = normalize(i.worldNormal) * facing;
-#endif
-#endif
+                #endif
+                #endif
 
                 fixed pointToLight = 1.0;
                 fixed3 fluentLightColor = fixed3(0.0, 0.0, 0.0);
 
                 // Hover light.
-#if defined(_HOVER_LIGHT)
+                #if defined(_HOVER_LIGHT)
                 pointToLight = 0.0;
 
                 [unroll]
                 for (int hoverLightIndex = 0; hoverLightIndex < HOVER_LIGHT_COUNT; ++hoverLightIndex)
                 {
                     int dataIndex = hoverLightIndex * HOVER_LIGHT_DATA_SIZE;
-                    fixed hoverValue = HoverLight(_HoverLightData[dataIndex], _HoverLightData[dataIndex + 1].w, i.worldPosition.xyz);
+                    fixed hoverValue = HoverLight(_HoverLightData[dataIndex], _HoverLightData[dataIndex + 1].w,
+                                                  i.worldPosition.xyz);
                     pointToLight += hoverValue;
-#if !defined(_HOVER_COLOR_OVERRIDE)
+                    #if !defined(_HOVER_COLOR_OVERRIDE)
                     fluentLightColor += lerp(fixed3(0.0, 0.0, 0.0), _HoverLightData[dataIndex + 1].rgb, hoverValue);
-#endif
+                    #endif
                 }
-#if defined(_HOVER_COLOR_OVERRIDE)
+                #if defined(_HOVER_COLOR_OVERRIDE)
                 fluentLightColor = _HoverColorOverride.rgb * pointToLight;
-#endif
-#endif
+                #endif
+                #endif
 
                 // Proximity light.
-#if defined(_PROXIMITY_LIGHT)
-#if !defined(_HOVER_LIGHT)
+                #if defined(_PROXIMITY_LIGHT)
+                #if !defined(_HOVER_LIGHT)
                 pointToLight = 0.0;
-#endif
+                #endif
                 [unroll]
                 for (int proximityLightIndex = 0; proximityLightIndex < PROXIMITY_LIGHT_COUNT; ++proximityLightIndex)
                 {
                     int dataIndex = proximityLightIndex * PROXIMITY_LIGHT_DATA_SIZE;
                     fixed colorValue;
-                    fixed proximityValue = ProximityLight(_ProximityLightData[dataIndex], _ProximityLightData[dataIndex + 1], _ProximityLightData[dataIndex + 2], i.worldPosition.xyz, worldNormal, colorValue);
+                    fixed proximityValue = ProximityLight(_ProximityLightData[dataIndex],
+                                                          _ProximityLightData[dataIndex + 1],
+                                                          _ProximityLightData[dataIndex + 2], i.worldPosition.xyz,
+                                                          worldNormal, colorValue);
                     pointToLight += proximityValue;
-#if defined(_PROXIMITY_LIGHT_COLOR_OVERRIDE)
-                    fixed3 proximityColor = MixProximityLightColor(_ProximityLightCenterColorOverride, _ProximityLightMiddleColorOverride, _ProximityLightOuterColorOverride, colorValue);
-#else
+                    #if defined(_PROXIMITY_LIGHT_COLOR_OVERRIDE)
+                    fixed3 proximityColor = MixProximityLightColor(_ProximityLightCenterColorOverride,
+                                                                   _ProximityLightMiddleColorOverride,
+                                                                   _ProximityLightOuterColorOverride, colorValue);
+                    #else
                     fixed3 proximityColor = MixProximityLightColor(_ProximityLightData[dataIndex + 3], _ProximityLightData[dataIndex + 4], _ProximityLightData[dataIndex + 5], colorValue);
-#endif  
-#if defined(_PROXIMITY_LIGHT_SUBTRACTIVE)
+                    #endif
+                    #if defined(_PROXIMITY_LIGHT_SUBTRACTIVE)
                     fluentLightColor -= lerp(fixed3(0.0, 0.0, 0.0), proximityColor, proximityValue);
-#else
+                    #else
                     fluentLightColor += lerp(fixed3(0.0, 0.0, 0.0), proximityColor, proximityValue);
-#endif    
+                    #endif
                 }
-#endif    
+                #endif
 
                 // Border light.
-#if defined(_BORDER_LIGHT)
+                #if defined(_BORDER_LIGHT)
                 fixed borderValue;
-#if defined(_ROUND_CORNERS)
+                #if defined(_ROUND_CORNERS)
                 fixed borderMargin = _RoundCornerMargin + _BorderWidth * 0.5;
 
                 cornerCircleRadius = saturate(max(currentCornerRadius - borderMargin, 0.01)) * i.scale.z;
@@ -1018,160 +1040,166 @@ Shader "Mixed Reality Toolkit/Standard"
                 cornerCircleDistance = halfScale - (borderMargin * i.scale.z) - cornerCircleRadius;
 
                 borderValue = 1.0 - RoundCornersSmooth(roundCornerPosition, cornerCircleDistance, cornerCircleRadius);
-#else
+                #else
                 borderValue = max(smoothstep(i.uv.z - _EdgeSmoothingValue, i.uv.z + _EdgeSmoothingValue, distanceToEdge.x),
                                   smoothstep(i.uv.w - _EdgeSmoothingValue, i.uv.w + _EdgeSmoothingValue, distanceToEdge.y));
-#endif
-#if defined(_HOVER_LIGHT) && defined(_BORDER_LIGHT_USES_HOVER_COLOR) && defined(_HOVER_COLOR_OVERRIDE)
+                #endif
+                #if defined(_HOVER_LIGHT) && defined(_BORDER_LIGHT_USES_HOVER_COLOR) && defined(_HOVER_COLOR_OVERRIDE)
                 fixed3 borderColor = _HoverColorOverride.rgb;
-#else
+                #else
                 fixed3 borderColor = fixed3(1.0, 1.0, 1.0);
-#endif
+                #endif
                 fixed3 borderContribution = borderColor * borderValue * _BorderMinValue * _FluentLightIntensity;
-#if defined(_BORDER_LIGHT_REPLACES_ALBEDO)
+                #if defined(_BORDER_LIGHT_REPLACES_ALBEDO)
                 albedo.rgb = lerp(albedo.rgb, borderContribution, borderValue);
-#else
+                #else
                 albedo.rgb += borderContribution;
-#endif
-#if defined(_HOVER_LIGHT) || defined(_PROXIMITY_LIGHT)
+                #endif
+                #if defined(_HOVER_LIGHT) || defined(_PROXIMITY_LIGHT)
                 albedo.rgb += (fluentLightColor * borderValue * pointToLight * _FluentLightIntensity) * 2.0;
-#endif
-#if defined(_BORDER_LIGHT_OPAQUE)
+                #endif
+                #if defined(_BORDER_LIGHT_OPAQUE)
                 albedo.a = max(albedo.a, borderValue * _BorderLightOpaqueAlpha);
-#endif
-#endif
+                #endif
+                #endif
 
-#if defined(_ROUND_CORNERS)
+                #if defined(_ROUND_CORNERS)
                 albedo *= roundCornerClip;
                 pointToLight *= roundCornerClip;
-#endif
+                #endif
 
-#ifdef UNITY_UI_CLIP_RECT
+                #ifdef UNITY_UI_CLIP_RECT
                 albedo.a *= UnityGet2DClipping(i.localPosition.xy, _ClipRect);
-#endif
+                #endif
 
-#if defined(_ALPHA_CLIP)
-#if !defined(_ALPHATEST_ON)
+                #if defined(_ALPHA_CLIP)
+                #if !defined(_ALPHATEST_ON)
                 _Cutoff = 0.5;
-#endif
-#if defined(_CLIPPING_PRIMITIVE)
+                #endif
+                #if defined(_CLIPPING_PRIMITIVE)
                 albedo *= (primitiveDistance > 0.0);
-#endif
+                #endif
                 clip(albedo.a - _Cutoff);
                 albedo.a = 1.0;
-#endif
+                #endif
 
                 // Blinn phong lighting.
-#if defined(_DIRECTIONAL_LIGHT)
-#if defined(_RENDER_PIPELINE)
+                #if defined(_DIRECTIONAL_LIGHT)
+                #if defined(_RENDER_PIPELINE)
                 float4 directionalLightDirection = _MainLightPosition;
-#else
+                #else
                 float4 directionalLightDirection = _WorldSpaceLightPos0;
-#endif
+                #endif
                 fixed diffuse = max(0.0, dot(worldNormal, directionalLightDirection));
-#if defined(_SPECULAR_HIGHLIGHTS)
+                #if defined(_SPECULAR_HIGHLIGHTS)
                 fixed halfVector = max(0.0, dot(worldNormal, normalize(directionalLightDirection + worldViewDir)));
-                fixed specular = saturate(pow(halfVector, _Shininess * pow(_Smoothness, 4.0)) * (_Smoothness * 2.0) * _Metallic);
-#else
+                fixed specular = saturate(
+                    pow(halfVector, _Shininess * pow(_Smoothness, 4.0)) * (_Smoothness * 2.0) * _Metallic);
+                #else
                 fixed specular = 0.0;
-#endif
-#endif
+                #endif
+                #endif
 
                 // Image based lighting (attempt to mimic the Standard shader).
-#if defined(_REFLECTIONS)
+                #if defined(_REFLECTIONS)
                 fixed3 worldReflection = reflect(incident, worldNormal);
-                fixed4 iblData = UNITY_SAMPLE_TEXCUBE_LOD(unity_SpecCube0, worldReflection, (1.0 - _Smoothness) * UNITY_SPECCUBE_LOD_STEPS);
+                fixed4 iblData = UNITY_SAMPLE_TEXCUBE_LOD(unity_SpecCube0, worldReflection,
+                                                          (1.0 - _Smoothness) * UNITY_SPECCUBE_LOD_STEPS);
                 fixed3 ibl = DecodeHDR(iblData, unity_SpecCube0_HDR);
-#if defined(_REFRACTION)
-                fixed4 refractColor = UNITY_SAMPLE_TEXCUBE(unity_SpecCube0, refract(incident, worldNormal, _RefractiveIndex));
+                #if defined(_REFRACTION)
+                fixed4 refractColor = UNITY_SAMPLE_TEXCUBE(unity_SpecCube0,
+                                                           refract(incident, worldNormal, _RefractiveIndex));
                 ibl *= DecodeHDR(refractColor, unity_SpecCube0_HDR);
-#endif
-#else
+                #endif
+                #else
                 fixed3 ibl = unity_IndirectSpecColor.rgb;
-#endif
+                #endif
 
                 // Fresnel lighting.
-#if defined(_FRESNEL)
+                #if defined(_FRESNEL)
                 fixed fresnel = 1.0 - saturate(abs(dot(worldViewDir, worldNormal)));
-#if defined(_RIM_LIGHT)
+                #if defined(_RIM_LIGHT)
                 fixed3 fresnelColor = _RimColor * pow(fresnel, _RimPower);
-#else
+                #else
                 fixed3 fresnelColor = unity_IndirectSpecColor.rgb * (pow(fresnel, _FresnelPower) * max(_Smoothness, 0.5));
-#endif
-#endif
+                #endif
+                #endif
                 // Final lighting mix.
                 fixed4 output = albedo;
-#if defined(_SPHERICAL_HARMONICS)
+                #if defined(_SPHERICAL_HARMONICS)
                 fixed3 ambient = i.ambient;
-#else
+                #else
                 fixed3 ambient = glstate_lightmodel_ambient + fixed3(0.25, 0.25, 0.25);
-#endif
+                #endif
                 fixed minProperty = min(_Smoothness, _Metallic);
-#if defined(_DIRECTIONAL_LIGHT)
+                #if defined(_DIRECTIONAL_LIGHT)
                 fixed oneMinusMetallic = (1.0 - _Metallic);
                 output.rgb = lerp(output.rgb, ibl, minProperty);
-#if defined(_RENDER_PIPELINE)
+                #if defined(_RENDER_PIPELINE)
                 fixed3 directionalLightColor = _MainLightColor.rgb;
-#else
+                #else
                 fixed3 directionalLightColor = _LightColor0.rgb;
-#endif
-                output.rgb *= lerp((ambient + directionalLightColor * diffuse + directionalLightColor * specular) * max(oneMinusMetallic, _MinMetallicLightContribution), albedo, minProperty);
-                output.rgb += (directionalLightColor * albedo * specular) + (directionalLightColor * specular * _Smoothness);
+                #endif
+                output.rgb *= lerp(
+                    (ambient + directionalLightColor * diffuse + directionalLightColor * specular) * max(
+                        oneMinusMetallic, _MinMetallicLightContribution), albedo, minProperty);
+                output.rgb += (directionalLightColor * albedo * specular) + (directionalLightColor * specular *
+                    _Smoothness);
                 output.rgb += ibl * oneMinusMetallic * _IblContribution;
-#elif defined(_REFLECTIONS)
+                #elif defined(_REFLECTIONS)
                 output.rgb = lerp(output.rgb, ibl, minProperty);
                 output.rgb *= lerp(ambient, albedo, minProperty);
-#elif defined(_SPHERICAL_HARMONICS)
+                #elif defined(_SPHERICAL_HARMONICS)
                 output.rgb *= ambient;
-#endif
+                #endif
 
-#if defined(_FRESNEL)
-#if defined(_RIM_LIGHT) || !defined(_REFLECTIONS)
+                #if defined(_FRESNEL)
+                #if defined(_RIM_LIGHT) || !defined(_REFLECTIONS)
                 output.rgb += fresnelColor;
-#else
+                #else
                 output.rgb += fresnelColor * (1.0 - minProperty);
-#endif
-#endif
+                #endif
+                #endif
 
-#if defined(_EMISSION)
-#if defined(_CHANNEL_MAP)
+                #if defined(_EMISSION)
+                #if defined(_CHANNEL_MAP)
                 output.rgb += _EmissiveColor * channel.b;
-#else
+                #else
                 output.rgb += _EmissiveColor;
-#endif
-#endif
+                #endif
+                #endif
 
                 // Inner glow.
-#if defined(_INNER_GLOW)
+                #if defined(_INNER_GLOW)
                 fixed2 uvGlow = pow(distanceToEdge * _InnerGlowColor.a, _InnerGlowPower);
                 output.rgb += lerp(fixed3(0.0, 0.0, 0.0), _InnerGlowColor.rgb, uvGlow.x + uvGlow.y);
-#endif
+                #endif
 
                 // Environment coloring.
-#if defined(_ENVIRONMENT_COLORING)
+                #if defined(_ENVIRONMENT_COLORING)
                 fixed3 environmentColor = incident.x * incident.x * _EnvironmentColorX +
-                                          incident.y * incident.y * _EnvironmentColorY +
-                                          incident.z * incident.z * _EnvironmentColorZ;
-                output.rgb += environmentColor * max(0.0, dot(incident, worldNormal) + _EnvironmentColorThreshold) * _EnvironmentColorIntensity;
+                    incident.y * incident.y * _EnvironmentColorY +
+                    incident.z * incident.z * _EnvironmentColorZ;
+                output.rgb += environmentColor * max(0.0, dot(incident, worldNormal) + _EnvironmentColorThreshold) *
+                    _EnvironmentColorIntensity;
 
-#endif
+                #endif
 
-#if defined(_NEAR_PLANE_FADE)
+                #if defined(_NEAR_PLANE_FADE)
                 output *= i.worldPosition.w;
-#endif
+                #endif
 
                 // Hover and proximity lighting should occur after near plane fading.
-#if defined(_HOVER_LIGHT) || defined(_PROXIMITY_LIGHT)
+                #if defined(_HOVER_LIGHT) || defined(_PROXIMITY_LIGHT)
                 output.rgb += fluentLightColor * _FluentLightIntensity * pointToLight;
-#endif
+                #endif
 
                 // Perform non-alpha clipped primitive clipping on the final output.
-#if defined(_CLIPPING_PRIMITIVE) && !defined(_ALPHA_CLIP)
+                #if defined(_CLIPPING_PRIMITIVE) && !defined(_ALPHA_CLIP)
                 output *= saturate(primitiveDistance * (1.0f / _BlendedClippingWidth));
-#endif
+                #endif
                 return output;
             }
-
             ENDCG
         }
 
@@ -1180,10 +1208,12 @@ Shader "Mixed Reality Toolkit/Standard"
         Pass
         {
             Name "Meta"
-            Tags { "LightMode" = "Meta" }
+            Tags
+            {
+                "LightMode" = "Meta"
+            }
 
             CGPROGRAM
-
             #pragma vertex vert
             #pragma fragment frag
 
@@ -1208,7 +1238,8 @@ Shader "Mixed Reality Toolkit/Standard"
             v2f vert(appdata_full v)
             {
                 v2f o;
-                o.vertex = UnityMetaVertexPosition(v.vertex, v.texcoord1.xy, v.texcoord2.xy, unity_LightmapST, unity_DynamicLightmapST);
+                o.vertex = UnityMetaVertexPosition(v.vertex, v.texcoord1.xy, v.texcoord2.xy, unity_LightmapST,
+                                                   unity_DynamicLightmapST);
                 o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
 
                 return o;
@@ -1220,14 +1251,14 @@ Shader "Mixed Reality Toolkit/Standard"
             fixed4 _Color;
             fixed4 _EmissiveColor;
 
-#if defined(_RENDER_PIPELINE)
+            #if defined(_RENDER_PIPELINE)
             CBUFFER_START(_LightBuffer)
             float4 _MainLightPosition;
             half4 _MainLightColor;
             CBUFFER_END
-#else
+            #else
             fixed4 _LightColor0;
-#endif
+            #endif
 
             half4 frag(v2f i) : SV_Target
             {
@@ -1235,18 +1266,18 @@ Shader "Mixed Reality Toolkit/Standard"
                 UNITY_INITIALIZE_OUTPUT(UnityMetaInput, output);
 
                 output.Albedo = tex2D(_MainTex, i.uv) * _Color;
-#if defined(_EMISSION)
-#if defined(_CHANNEL_MAP)
+                #if defined(_EMISSION)
+                #if defined(_CHANNEL_MAP)
                 output.Emission += tex2D(_ChannelMap, i.uv).b * _EmissiveColor;
-#else
+                #else
                 output.Emission += _EmissiveColor;
-#endif
-#endif
-#if defined(_RENDER_PIPELINE)
+                #endif
+                #endif
+                #if defined(_RENDER_PIPELINE)
                 output.SpecularColor = _MainLightColor.rgb;
-#else
+                #else
                 output.SpecularColor = _LightColor0.rgb;
-#endif
+                #endif
 
                 return UnityMetaFragment(output);
             }
