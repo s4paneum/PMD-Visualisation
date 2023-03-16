@@ -18,6 +18,7 @@ public class PmdFetcher : MonoBehaviour
     public GameObject headerPrefab;
     public GameObject rowPrefab;
     public ScrollView scrollView;
+    public CodeReview codeReview;
     
     // Start is called before the first frame update
     void Start()
@@ -35,9 +36,9 @@ public class PmdFetcher : MonoBehaviour
         string correct_spaces = Regex.Replace(line, @"\s+", " ");
         string[] result = correct_spaces.Split(new string[] {": "}, System.StringSplitOptions.None);
 
-        GameObject row = Instantiate(headerPrefab, new Vector3(0,0,-1), Quaternion.identity);
-        row.GetComponent<Header>().setHeader(result[0], result[1], result[2]);
-        
+        GameObject row = Instantiate(headerPrefab, new Vector3(0,0,0), Quaternion.identity);
+        row.GetComponent<Header>().setHeader(result[0], result[1], result[2], codeReview);
+
         return row;
     }
     private void ExecutePMD(string _code_path)
@@ -45,10 +46,11 @@ public class PmdFetcher : MonoBehaviour
         try
         {
             // create Header
-            GameObject header = Instantiate(headerPrefab, new Vector3(0,0,-1), Quaternion.identity);
-            header.GetComponent<Header>().setHeader("Line", "Rule", "Description");
-            header.GetComponent<Header>().SetFontSize(60);
+            GameObject header = Instantiate(headerPrefab, new Vector3(0,0,0), Quaternion.identity);
+            header.GetComponent<Header>().setHeader("Line", "Rule", "Description", null);
+            header.GetComponent<Header>().SetFontSize(72);
             header.transform.SetParent(panel.transform, false);
+            header.transform.localScale = Vector3.one;
             
             // run pmd
             ProcessStartInfo startInfo = new ProcessStartInfo()
@@ -75,14 +77,12 @@ public class PmdFetcher : MonoBehaviour
             {
                 GameObject row = createRow(line);
                 row.transform.SetParent(panel.transform, false);
+                row.transform.localScale = Vector3.one;
 
                 line = myProcess.StandardOutput.ReadLine();
             }
             
             myProcess.WaitForExit();
-            
-            Canvas.ForceUpdateCanvases();
-
 
         }
         catch (Exception e)
