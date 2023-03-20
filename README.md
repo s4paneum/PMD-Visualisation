@@ -8,7 +8,7 @@ __Configuration:__
 - Start Unity and open the Scene PMD_AR
 - Click on the GameObject PmdFetcher and add the following
 - Add the full path for the pmd.bat
-- Add the full path for the ruleset (quickstart.xml)
+- Add the full path for the ruleset (quickstart.xml in the rulesets folder)
 - Add the full path of a java file or a folder that you want to be analysed
 
 ![image](https://github.com/s4paneum/PMD-Visualisation/blob/main/screenshots/configuration.png)
