@@ -984,8 +984,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 919146395}
   m_HandleRect: {fileID: 919146394}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.999957
+  m_Value: 1
+  m_Size: 0.9999563
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1172,7 +1172,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1075551613
 MonoBehaviour:
@@ -1194,9 +1194,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '1
-
-'
+  m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1307,7 +1305,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.009197623, y: 0.005584717}
+  m_AnchoredPosition: {x: -0.014949898, y: 0.0049438477}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1168776389
@@ -1381,10 +1379,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pmd_path: C:\Users\Patrick\Desktop\Uni\FST_ALL\abschluss\pmd-bin-6.55.0\pmd-bin-6.55.0\bin\pmd.bat
   ruleset_path: C:\Users\Patrick\Desktop\Uni\FST_ALL\abschluss\rulesets\java\quickstart.xml
-  code_path: C:\Users\Patrick\Desktop\Uni\FST_ALL\u3\javapacman\Ghost.java
+  code_path: C:\Users\Patrick\Desktop\Uni\FST_ALL\u3\javapacman
   panel: {fileID: 1168776387}
-  headerPrefab: {fileID: 913640440065885974, guid: 895aaddaa50cd574dbe6ae1fd2dc4445, type: 3}
-  rowPrefab: {fileID: 0}
+  rowPrefab: {fileID: 3672068484984549898, guid: 62f211ee6b50db04cb4da3a220dd2910, type: 3}
   codeReview: {fileID: 1437517964}
 --- !u!4 &1187168609
 Transform:
@@ -1866,6 +1863,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textNumbers: {fileID: 1075551613}
   textCode: {fileID: 1697113773}
+  verticalScrollbar: {fileID: 1256561284}
 --- !u!1 &1490956542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1902,7 +1900,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.024491157, y: 0.0037231445}
+  m_AnchoredPosition: {x: 0.0011470141, y: 0.00030517578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1490956544
@@ -1926,7 +1924,7 @@ MonoBehaviour:
   m_Spacing: 10
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
@@ -1943,7 +1941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
+  m_HorizontalFit: 2
   m_VerticalFit: 2
 --- !u!1 &1579823977
 GameObject:
@@ -2081,7 +2079,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 48.03, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1697113773
 MonoBehaviour:
@@ -2103,7 +2101,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Touch a line of code in the pmd report
+  m_text: Touch a line of code in the pmd report.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2166,7 +2164,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -252.13849, w: 0}
+  m_margin: {x: 0, y: 0, z: -144.40302, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

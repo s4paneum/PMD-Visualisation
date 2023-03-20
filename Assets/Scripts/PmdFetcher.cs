@@ -15,9 +15,7 @@ public class PmdFetcher : MonoBehaviour
 
     public String code_path = "";
     public GameObject panel;
-    public GameObject headerPrefab;
     public GameObject rowPrefab;
-    public ScrollView scrollView;
     public CodeReview codeReview;
     
     // Start is called before the first frame update
@@ -36,8 +34,8 @@ public class PmdFetcher : MonoBehaviour
         string correct_spaces = Regex.Replace(line, @"\s+", " ");
         string[] result = correct_spaces.Split(new string[] {": "}, System.StringSplitOptions.None);
 
-        GameObject row = Instantiate(headerPrefab, new Vector3(0,0,0), Quaternion.identity);
-        row.GetComponent<Header>().setHeader(result[0], result[1], result[2], codeReview);
+        GameObject row = Instantiate(rowPrefab, new Vector3(0,0,0), Quaternion.identity);
+        row.GetComponent<Row>().SetRow(result[0], result[1], result[2], codeReview);
 
         return row;
     }
@@ -46,9 +44,9 @@ public class PmdFetcher : MonoBehaviour
         try
         {
             // create Header
-            GameObject header = Instantiate(headerPrefab, new Vector3(0,0,0), Quaternion.identity);
-            header.GetComponent<Header>().setHeader("Line", "Rule", "Description", null);
-            header.GetComponent<Header>().SetFontSize(72);
+            GameObject header = Instantiate(rowPrefab, new Vector3(0,0,0), Quaternion.identity);
+            header.GetComponent<Row>().SetRow("Line", "Rule", "Description", null);
+            header.GetComponent<Row>().SetFontSize(12);
             header.transform.SetParent(panel.transform, false);
             header.transform.localScale = Vector3.one;
             
@@ -81,6 +79,8 @@ public class PmdFetcher : MonoBehaviour
 
                 line = myProcess.StandardOutput.ReadLine();
             }
+            
+   
             
             myProcess.WaitForExit();
 

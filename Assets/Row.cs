@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.MixedReality.Toolkit.Input;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class Row : MonoBehaviour
 
     public TextMeshProUGUI textLine;
     public TextMeshProUGUI textPattern;
-    public TextMeshPro textDescription;
+    public TextMeshProUGUI textDescription;
     
     // Start is called before the first frame update
     void Start()
@@ -22,9 +23,11 @@ public class Row : MonoBehaviour
         
     }
 
-    public void setRow(string line, string pattern, string description)
+    public void SetRow(string line, string pattern, string description, CodeReview codeReview)
     {
         textLine.text = line;
+        textLine.GetComponent<PmdLine>().codeReview = codeReview;
+        textLine.GetComponent<PmdLine>().line = line;
         textPattern.text = pattern;
         textDescription.text = description;
     }
