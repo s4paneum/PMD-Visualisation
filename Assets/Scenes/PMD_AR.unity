@@ -984,8 +984,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 919146395}
   m_HandleRect: {fileID: 919146394}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.9999563
+  m_Value: 0
+  m_Size: 0.99996173
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1305,7 +1305,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.014949898, y: 0.0049438477}
+  m_AnchoredPosition: {x: -0.010074632, y: 0.012374878}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1168776389
@@ -1377,9 +1377,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9a6dba53bdf5764d9b0fec1f22a4de6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pmd_path: C:\Users\Patrick\Desktop\Uni\FST_ALL\abschluss\pmd-bin-6.55.0\pmd-bin-6.55.0\bin\pmd.bat
-  ruleset_path: C:\Users\Patrick\Desktop\Uni\FST_ALL\abschluss\rulesets\java\quickstart.xml
-  code_path: C:\Users\Patrick\Desktop\Uni\FST_ALL\u3\javapacman
+  pmd_path: 
+  ruleset_path: 
+  code_path: 
   panel: {fileID: 1168776387}
   rowPrefab: {fileID: 3672068484984549898, guid: 62f211ee6b50db04cb4da3a220dd2910, type: 3}
   codeReview: {fileID: 1437517964}
@@ -1460,7 +1460,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 986877497}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99995476
+  m_Size: 0.99993855
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1900,7 +1900,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0011470141, y: 0.00030517578}
+  m_AnchoredPosition: {x: -0.017611697, y: 0.002166748}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1490956544
